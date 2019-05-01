@@ -1,2 +1,2 @@
 [appserver]
-appserver1 ansible_host=3.87.12.78
+appserver1 ansible_host=54.163.155.129

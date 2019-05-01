@@ -38,7 +38,11 @@
 
 - name: creating username
   copy: src=context.xml dest=/opt/apache-tomcat-9.0.19/webapps/host-manager/WEB-INF  
+  notify: restart tomcat
 
-- name: tomcat start
-  service: name=tomcat state=restarted
+- name: changing the port number
+  copy: src=server.xml dest=/opt/apache-tomcat-9.0.19/conf
+  notify: restart tomcat
+  
+
 

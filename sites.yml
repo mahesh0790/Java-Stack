@@ -1,0 +1,8 @@
+---
+- name: installjava
+  hosts: appserver1
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+  - app-server

@@ -1,0 +1,38 @@
+---
+- name: 1. install java 
+  apt: name=openjdk-8-jdk state=present
+
+- name: 2. install url
+  get_url: url=http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.19/bin/apache-tomcat-9.0.19.tar.gz dest=/opt/tomcat.tar.gz
+
+- name: 3. extract the file
+  unarchive: src=/opt/tomcat.tar.gz dest=/opt remote_src=yes
+
+- name: 5. creating group
+  group: name=tomcat
+
+- name: 6. create user and add user into the group
+  user: name=tomcat group=tomcat home=/opt/apache-tomcat-9.0.19
+
+- name: changing the ownership permission
+  file: path=/opt/apache-tomcat-9.0.19 owner=tomcat group=tomcat mode=0777 state=directory recurse=yes
+  
+- name: 7. file permission
+  file: path=/opt/apache-tomcat-9.0.19 state=directory mode=0775 recurse=yes
+
+- name: 8. execute a script
+  copy: src=tomcat.service dest=/etc/systemd/system
+
+- name: 9. reload
+  command: systemctl daemon-reload
+  become_method: sudo
+
+- name: tomcat start
+  service: name=tomcat state=started
+
+- name: creating username
+  copy: src=tomcat-users.xml dest=/opt/apache-tomcat-9.0.19/conf  
+  
+- name: tomcat start
+  service: name=tomcat state=restarted
+

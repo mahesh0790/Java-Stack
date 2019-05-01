@@ -1,0 +1,3 @@
+---
+# tasks file for app-server
+- include: java.yml

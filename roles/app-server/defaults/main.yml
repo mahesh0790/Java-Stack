@@ -1,2 +1,5 @@
 ---
 # defaults file for app-server
+
+admin_username: defaultadmin
+admin_password: maheshsecret
